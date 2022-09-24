@@ -26,3 +26,8 @@ Starting with old way of doing AJAX in Javascript which is XML HTTP request func
 
 * Firstly the API we will be using for this project is called Rest country 
 * Using get country by name URl to which AJAX is called second argument request.open will take
+
+used (request.open) to open the url 
+used (request.send) to send response 
+
+// the countries may not arrive accordingly on the interface cus they load faster then each other, This makes it  visible of a AJAx asynchronous JS
