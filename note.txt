@@ -19,3 +19,10 @@ Asynchronous means (Not occuring at the same time) in programming
 AJAX: allows us to commucate with web server in an asynchronous way which makes the request and response works asynchronously in the background
 
 *The type of API wen using AJAX which he called "ONLINE APIs": This just like a normal API which allow us to request for data and get response from the web server
+
+///////////////////////////////////////////
+Getting datas about countries from a third party online APIs
+Starting with old way of doing AJAX in Javascript which is XML HTTP request function
+
+* Firstly the API we will be using for this project is called Rest country 
+* Using get country by name URl to which AJAX is called second argument request.open will take
