@@ -1,0 +1,21 @@
+Asynchronous Javascript is basically to deal with long running tasks that runs in the background
+
+And commonly use to fetch data from remote server calls (AJAXS)
+Alos to learn Promisses, The fetch function, async await and error handling
+
+////////
+Synchronous code, the oppporsite of asynchronouse : Codes which execute line by line without continue if previous line not done
+
+Asynchronous code do have SettimeOut in thier call back function which makes the code execute after a task thats runs in the background finish without non-blocking or waiting for call back function to finish running 
+
+Asynchronous means (Not occuring at the same time) in programming
+
+*Asynchronous behaviour of a task after
+1) Running a timer
+2) Loading an image     // Other Example 
+3) geolocation API or AJAX calls
+
+//////////////////////////////////////////////
+AJAX: allows us to commucate with web server in an asynchronous way which makes the request and response works asynchronously in the background
+
+*The type of API wen using AJAX which he called "ONLINE APIs": This just like a normal API which allow us to request for data and get response from the web server
