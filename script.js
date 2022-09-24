@@ -86,6 +86,8 @@ const getCountryAndNeighbour = function (country) {
     // Get neighbour country
     const [neighbour] = data.borders;
 
+    if (!neighbour) return;
+
     // AJAX call country 2
     const request2 = new XMLHttpRequest();
     request2.open('GET', `https://restcountries.com/v2/alpha/${neighbour}`);
@@ -103,6 +105,7 @@ getCountryAndNeighbour('nigeria');
 getCountryAndNeighbour('united kingdom');
 */
 
+///////////////////////////////////////////////////////////////
 // Promises use in preventing call back hell
 // Promise is a container of object for an asynchronously delivered value. Example is Response from an AJAX call
 
@@ -116,13 +119,33 @@ getCountryAndNeighbour('united kingdom');
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(function (response) {
-      console.log(response);
+      // console.log(response);
       return response.json(); // to read the data from the response and we also return a peomise
     })
     .then(function (data) {
       console.log(data); // then we can call another function to have access to the real data cause we have call json() on previous promise
       renderCountry(data[0]);
-    });
+
+      // Chaining promises
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      // country 2
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data, 'neighbour');
+      console.log(data)
+      
+      const neighbour2 = data.borders[1];
+
+      // country 3
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour2}`);
+    })
+    .then(reponse => reponse.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
 
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
