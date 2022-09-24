@@ -31,3 +31,17 @@ used (request.open) to open the url
 used (request.send) to send response 
 
 // the countries may not arrive accordingly on the interface cus they load faster then each other, This makes it  visible of a AJAx asynchronous JS
+
+////////////////////////////////////////
+// How the web works request and response 
+Domain of the url not the real address but a name given to it, DNS: Domain name server will get us the real ip Address of the domain then sent it back to the server
+
+2) TCP/IP (internet protocol) will be the connection btw the browser and web server, and will only be avialable for the time it will take to laod all datas from the web server.
+
+// TCP will prepare the datas into small small size while IP will send them to the internet
+
+3)HTTP is web server that allows the client(browser) to communicate with the web server 
+HTTP methods: They are many available but the important ones are,:
+1) GET: for requesting data
+2) POST: to semd data
+while PUT and PATCH are basically TO MODIFY DATAS
