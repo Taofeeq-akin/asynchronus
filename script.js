@@ -100,3 +100,13 @@ const getCountryAndNeighbour = function (country) {
 };
 getCountryAndNeighbour('nigeria');
 getCountryAndNeighbour('united kingdom');
+
+
+// Promises use in preventing call back hell
+// Promise is a container of object for an asynchronously delivered value. Example is Response from an AJAX call
+
+// Fetch Api is use in building promise, then we consume the promise 
+
+// const request = fetch(`https://restcountries.com/v2/name/nigeria`)
+// console.log(request)
+//so request is now promise after it datas have been fetch */
