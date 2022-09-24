@@ -68,6 +68,7 @@ const renderCountry = function (data, classname = '') {
   countriesContainer.style.opacity = 1;
 };
 
+/*
 const getCountryAndNeighbour = function (country) {
   const request = new XMLHttpRequest();
   // Bsically open request
@@ -100,13 +101,29 @@ const getCountryAndNeighbour = function (country) {
 };
 getCountryAndNeighbour('nigeria');
 getCountryAndNeighbour('united kingdom');
-
+*/
 
 // Promises use in preventing call back hell
 // Promise is a container of object for an asynchronously delivered value. Example is Response from an AJAX call
 
-// Fetch Api is use in building promise, then we consume the promise 
+// Fetch Api is use in building promise, then we consume the promise
 
 // const request = fetch(`https://restcountries.com/v2/name/nigeria`)
 // console.log(request)
-//so request is now promise after it datas have been fetch */
+//so request is now promise after it datas have been fetch
+
+// Consuming Promises
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(function (response) {
+      console.log(response);
+      return response.json(); // to read the data from the response and we also return a peomise
+    })
+    .then(function (data) {
+      console.log(data); // then we can call another function to have access to the real data cause we have call json() on previous promise
+      renderCountry(data[0]);
+    });
+};
+
+// We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
+getCountryData('nigeria');
