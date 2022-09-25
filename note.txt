@@ -49,3 +49,12 @@ while PUT and PATCH are basically TO MODIFY DATAS
 ////////////////////////////
 Back to Our code
 WE get the naghbouring country using prvious country data.borders 
+
+Notes i took on Promisses and Fetch Api are in my js file
+Also did chaining promise and consuming promise to prevent callback hell
+
+
+// Two major things can happen to wen we using fetch method, which are either to fulfill promise or reject promise.
+
+//So we have a way of handling rejected promise which are of two types:
+1) Is to pass a a second callback function in the then method which will be for rejected promise

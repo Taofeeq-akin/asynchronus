@@ -118,10 +118,13 @@ getCountryAndNeighbour('united kingdom');
 // Consuming Promises
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(function (response) {
-      // console.log(response);
-      return response.json(); // to read the data from the response and we also return a peomise
-    })
+    .then(
+      function (response) {
+        // console.log(response);
+        return response.json(); // to read the data from the response and we also return a peomise
+      },
+      error => alert(error)
+    )
     .then(function (data) {
       console.log(data); // then we can call another function to have access to the real data cause we have call json() on previous promise
       renderCountry(data[0]);
@@ -137,8 +140,8 @@ const getCountryData = function (country) {
     .then(response => response.json())
     .then(data => {
       renderCountry(data, 'neighbour');
-      console.log(data)
-      
+      console.log(data);
+
       const neighbour2 = data.borders[1];
 
       // country 3
@@ -149,4 +152,7 @@ const getCountryData = function (country) {
 };
 
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
-getCountryData('nigeria');
+
+btn.addEventListener('click', function () {
+  getCountryData('nigeria');
+});
