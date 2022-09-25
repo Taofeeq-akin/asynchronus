@@ -22,13 +22,13 @@ const renderCountry = function (data, classname = '') {
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
   //set country opacity to one
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 // Errur render
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -156,8 +156,11 @@ const getCountryData = function (country) {
     .then(reponse => reponse.json())
     .then(data => renderCountry(data, 'neighbour'))
     .catch(err => {
-      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`);
-    }); // use to catch the rejected promise ;
+      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`); // use to catch the rejected promise ;;
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1; // instead of repeating this
+    });
 };
 
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
