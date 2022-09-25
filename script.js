@@ -3,6 +3,34 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+// Loading datas accordingly with there neighbouring country
+const renderCountry = function (data, classname = '') {
+  const html = `
+  <article class="country ${classname}">
+    <img class="country__img" src="${data.flag}" />
+    <div class="country__data">
+        <h3 class="country__name">${data.name}</h3>
+        <h4 class="country__region">${data.region}</h4>
+        <p class="country__row"><span>👫</span>${(
+          +data.population / 1000000
+        ).toFixed(1)} people</p>
+        <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+        <p class="country__row"><span>💰</span>${data.currencies[0].name}
+    </div>
+  </article>
+  `;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  //set country opacity to one
+  countriesContainer.style.opacity = 1;
+};
+
+// Errur render
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
+
 ///////////////////////////////////////
 // TO get multiple countries
 
@@ -45,28 +73,6 @@ const countriesContainer = document.querySelector('.countries');
 getCountryData('nigeria')
 getCountryData('usa')
 getCountryData('united kingdom')*/
-
-// Loading datas accordingly with there neighbouring country
-const renderCountry = function (data, classname = '') {
-  const html = `
-  <article class="country ${classname}">
-    <img class="country__img" src="${data.flag}" />
-    <div class="country__data">
-        <h3 class="country__name">${data.name}</h3>
-        <h4 class="country__region">${data.region}</h4>
-        <p class="country__row"><span>👫</span>${(
-          +data.population / 1000000
-        ).toFixed(1)} people</p>
-        <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-        <p class="country__row"><span>💰</span>${data.currencies[0].name}
-    </div>
-  </article>
-  `;
-
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  //set country opacity to one
-  countriesContainer.style.opacity = 1;
-};
 
 /*
 const getCountryAndNeighbour = function (country) {
@@ -122,8 +128,8 @@ const getCountryData = function (country) {
       function (response) {
         // console.log(response);
         return response.json(); // to read the data from the response and we also return a peomise
-      },
-      error => alert(error)
+      }
+      // err => alert(err) // prevent reject error
     )
     .then(function (data) {
       console.log(data); // then we can call another function to have access to the real data cause we have call json() on previous promise
@@ -148,7 +154,10 @@ const getCountryData = function (country) {
       return fetch(`https://restcountries.com/v2/alpha/${neighbour2}`);
     })
     .then(reponse => reponse.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`);
+    }); // use to catch the rejected promise ;
 };
 
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
