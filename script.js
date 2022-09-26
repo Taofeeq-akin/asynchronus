@@ -261,6 +261,7 @@ whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.874);
 */
 
+/*
 // Practice base on last lecture
 console.log('Test start');
 setTimeout(() => console.log('0 sec timer'), 0);
@@ -268,4 +269,21 @@ Promise.resolve('Resolved promise 1').then(res => console.log(res));
 console.log('Test end');
 
 // the first 2 already on the call stack will work first
-// followed by microtasks queue then callback queue
+// followed by microtasks queue then callback queue */
+
+////////////////////////////////////
+//Now time to build our own promise from scratch cus we have been consuming promise
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Draw now happening 💢')
+  // Setting a timer btw lottery card buy and wen it happens
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 👊👊👊'); // just like fulfill but tis method in promise
+    } else {
+      reject(new Error('You lose your money 😢😢😢')); // to get real error
+    }
+  }, 2000);
+}); // Encapsulate asynchronous into a promise
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
