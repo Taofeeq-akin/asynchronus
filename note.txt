@@ -61,3 +61,9 @@ Also did chaining promise and consuming promise to prevent callback hell
 2) Using catch method at the end of our last then method
 
 So while using catch it will make finally method available either promise is rejected or fulfiled 
+
+// Handling 404 error
+When ever we want to create someo error that we want to handle int the catch handler is to throw new error,
+Just like instead of returning alone if no neighbour find we can easily use throw new error.
+
+When use throe new Error, the message throw will be caught bt the catch method and will be the new error message instead of the default 404 message

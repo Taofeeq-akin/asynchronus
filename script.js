@@ -216,7 +216,7 @@ const getCountryData = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  getCountryData('nigeria');
+  getCountryData('australia');
 });
 
 // getCountryData('gdhrur');
