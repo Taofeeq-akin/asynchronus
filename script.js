@@ -221,6 +221,7 @@ btn.addEventListener('click', function () {
 });
 */
 
+/*
 // Coding challenge 1
 const whereAmI = function (lat, lng) {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
@@ -258,3 +259,13 @@ btn.addEventListener('click', function () {
 
 whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.874);
+*/
+
+// Practice base on last lecture
+console.log('Test start');
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+console.log('Test end');
+
+// the first 2 already on the call stack will work first
+// followed by microtasks queue then callback queue
