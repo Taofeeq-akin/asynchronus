@@ -81,3 +81,6 @@ If Javascript is one thread and non blocking language, how is it possible fir as
 
 // There is also Microtasks gotten from Promisses
 We have Microtasks queue just like callback queue but have higher priority over callback queue cus all Microtasks codes will run before any callback in callback queue
+
+///////////////////////////////////////////
+//Promisifying is the peocess of turning asynchronous based code into promise based

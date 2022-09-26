@@ -275,7 +275,7 @@ console.log('Test end');
 //Now time to build our own promise from scratch cus we have been consuming promise
 
 const lotteryPromise = new Promise(function (resolve, reject) {
-  console.log('Draw now happening 💢')
+  console.log('Draw now happening 💢');
   // Setting a timer btw lottery card buy and wen it happens
   setTimeout(() => {
     if (Math.random() >= 0.5) {
@@ -287,3 +287,18 @@ const lotteryPromise = new Promise(function (resolve, reject) {
 }); // Encapsulate asynchronous into a promise
 
 lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+
+// Promisifying setTimeOut
+const wait = seconds => {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+// consuming and chaining promise
+wait(2)
+  .then(() => {
+    console.log('Waited 2 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('Waited 1 second')); // Can easily use this asynchronous behaviour instesd of having multiple setTimeOut callback 
