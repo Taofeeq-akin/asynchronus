@@ -224,29 +224,37 @@ btn.addEventListener('click', function () {
 // Coding challenge 1
 const whereAmI = function (lat, lng) {
   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then(
-      function (reponse) {
-        console.log(reponse);
+    .then(function (reponse) {
+      console.log(reponse);
 
-        if (!reponse.ok)
-          throw new Error(`Country not found (${reponse.status})`);
+      if (!reponse.ok)
+        throw new Error(`Problem with geocode (${reponse.status})`);
 
-        return reponse.json();
-      }
-      // err => alert(err)
-    )
+      return reponse.json();
+    })
     .then(data => {
       console.log(data);
       console.log(`You are in ${data.city} in ${data.country}`);
+
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
     })
+    .then(reponse => {
+      if (!reponse.ok) throw new Error(`Country not found (${reponse.status})`);
+
+      return reponse.json();
+    })
+    .then(data => renderCountry(data[0]))
     .catch(err => {
       renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`); // use to catch the rejected promise ;;
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1; // instead of repeating this
     });
 };
 
 btn.addEventListener('click', function () {
-  whereAmI(52.508, 13.381);
+  // whereAmI(52.508, 13.381);
 });
 
-// whereAmI(52.508, 13.381);
+whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.874);
