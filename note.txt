@@ -70,3 +70,14 @@ When use throe new Error, the message throw will be caught bt the catch method a
 
 Challenge 
 This time got the country through a second api using the country coordinates
+
+
+// HOW Asynchronous Javascript works behinde the scene
+If Javascript is one thread and non blocking language, how is it possible fir asynchronous JS to be carried out
+
+1) All asynchronous task works in the web API environment of the browser and not in the call stack
+2) callback codes move to callback queue after it as been fully loaded on wed apis environment 
+3) Event loop will then check if the call stack is empty in order to be able to move next callback code to call stack from callback queue (This is called an event loop tick)
+
+// There is also Microtasks gotten from Promisses
+We have Microtasks queue just like callback queue but have higher priority over callback queue cus all Microtasks codes will run before any callback in callback queue
