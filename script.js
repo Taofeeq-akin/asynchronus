@@ -228,7 +228,8 @@ const whereAmI = function (lat, lng) {
       function (reponse) {
         console.log(reponse);
 
-        if (!reponse) return;
+        if (!reponse.ok)
+          throw new Error(`Country not found (${reponse.status})`);
 
         return reponse.json();
       }
@@ -236,13 +237,16 @@ const whereAmI = function (lat, lng) {
     )
     .then(data => {
       console.log(data);
-      console.log(`You are in ${data.city} in ${data.country}`)
+      console.log(`You are in ${data.city} in ${data.country}`);
+    })
+    .catch(err => {
+      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`); // use to catch the rejected promise ;;
     });
 };
 
 btn.addEventListener('click', function () {
-  // whereAmI(52.508, 13.381);
+  whereAmI(52.508, 13.381);
 });
 
-whereAmI(52.508, 13.381);
-whereAmI(19.037, 72.874);
+// whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.874);
