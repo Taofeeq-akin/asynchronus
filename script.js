@@ -271,9 +271,9 @@ console.log('Test end');
 // the first 2 already on the call stack will work first
 // followed by microtasks queue then callback queue */
 
+/*
 ////////////////////////////////////
 //Now time to build our own promise from scratch cus we have been consuming promise
-
 const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Draw now happening 💢');
   // Setting a timer btw lottery card buy and wen it happens
@@ -301,4 +301,56 @@ wait(2)
     console.log('Waited 2 seconds');
     return wait(1);
   })
-  .then(() => console.log('Waited 1 second')); // Can easily use this asynchronous behaviour instesd of having multiple setTimeOut callback 
+  .then(() => console.log('Waited 1 second')); // Can easily use this asynchronous behaviour instesd of having multiple setTimeOut callback */
+
+// Promisifying Geolocation
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(position),
+      err => reject(err)
+    );
+
+    // Can also be done like this also
+    // navigator.geolocation.getCurrentPosition(resolve, reject) //Cus is either fulfill or rejected
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+// Use on former challenge
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(function (reponse) {
+      // console.log(reponse);
+
+      if (!reponse.ok)
+        throw new Error(`Problem with geocode (${reponse.status})`);
+
+      return reponse.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city} in ${data.country}`);
+
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+    })
+    .then(reponse => {
+      if (!reponse.ok) throw new Error(`Country not found (${reponse.status})`);
+
+      return reponse.json();
+    })
+    .then(data => renderCountry(data[0]))
+    .catch(err => {
+      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`); // use to catch the rejected promise ;;
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1; // instead of repeating this
+    });
+};
+
+btn.addEventListener('click', whereAmI);
