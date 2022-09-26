@@ -177,6 +177,7 @@ const getCountryData = function (country) {
 */
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
 
+/*
 // Instead of repeating code for throw new error, i wrote fucnction gerJSON
 const getCountryData = function (country) {
   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
@@ -216,7 +217,32 @@ const getCountryData = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  getCountryData('australia');
+  getCountryData('germany');
+});
+*/
+
+// Coding challenge 1
+const whereAmI = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(
+      function (reponse) {
+        console.log(reponse);
+
+        if (!reponse) return;
+
+        return reponse.json();
+      }
+      // err => alert(err)
+    )
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city} in ${data.country}`)
+    });
+};
+
+btn.addEventListener('click', function () {
+  // whereAmI(52.508, 13.381);
 });
 
-// getCountryData('gdhrur');
+whereAmI(52.508, 13.381);
+whereAmI(19.037, 72.874);
