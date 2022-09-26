@@ -121,12 +121,24 @@ getCountryAndNeighbour('united kingdom');
 // console.log(request)
 //so request is now promise after it datas have been fetch
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(function (response) {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
+/*
 // Consuming Promises
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(
       function (response) {
         // console.log(response);
+        if (!response.ok)
+          throw new Error(`Country not found (${response.status})`); //Handling Error 404
+
         return response.json(); // to read the data from the response and we also return a peomise
       }
       // err => alert(err) // prevent reject error
@@ -162,9 +174,49 @@ const getCountryData = function (country) {
       countriesContainer.style.opacity = 1; // instead of repeating this
     });
 };
-
+*/
 // We have a then method the handle fulfiled in promises, so we call a call back function if promise now ready inside the then method
+
+// Instead of repeating code for throw new error, i wrote fucnction gerJSON
+const getCountryData = function (country) {
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
+    .then(function (data) {
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      // country 2
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour}`,
+        'Country not found'
+      );
+    })
+    .then(data => {
+      renderCountry(data, 'neighbour');
+
+      const neighbour2 = data.borders[1];
+      if (!neighbour2) return;
+
+      // country 3
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour2}, )
+      return fetch(`,
+        'Country not found'
+      );
+    })
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      renderError(`Something went wrong 🤦‍♂️🤦‍♂️ ${err.message}. Try again`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
 
 btn.addEventListener('click', function () {
   getCountryData('nigeria');
 });
+
+// getCountryData('gdhrur');
