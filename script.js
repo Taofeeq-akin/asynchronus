@@ -22,13 +22,13 @@ const renderCountry = function (data, classname = '') {
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
   //set country opacity to one
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 // Errur render
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -357,6 +357,7 @@ const whereAmI = function () {
 btn.addEventListener('click', whereAmI);
 */
 
+/*
 const imgsCont = document.querySelector('.images');
 
 const wait = function (seconds) {
@@ -382,7 +383,7 @@ const createImage = function (imgPath) {
 };
 
 let currenImg;
-
+// consume createImage Promise
 createImage('img/img-1.jpg')
   .then(img => {
     currenImg = img;
@@ -402,3 +403,35 @@ createImage('img/img-1.jpg')
     currenImg.style.display = 'none';
   })
   .catch(err => console.error(`Image not found `));
+*/
+
+// AyncAwait is new mothod of consuming promises which start from ES 2017
+
+// Still using th whereAmI function
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject); //Cus is either fulfill or rejected
+  });
+};
+
+const whereAmI = async function () {
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  //Reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // country data
+  const res = await fetch(
+    `https://restcountries.com/v2/name/${dataGeo.country}`
+  );
+  // console.log(res);
+  const data = await res.json(); // cus we still have to call json on the respond
+  console.log(data);
+  renderCountry(data[0]);
+};
+
+whereAmI();
