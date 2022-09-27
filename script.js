@@ -415,23 +415,34 @@ const getPosition = function () {
 };
 
 const whereAmI = async function () {
-  // Geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
+  // To be able to catch error using async await we have to put all codes in try object, Which is call try catch
 
-  //Reverse geocoding
-  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
+  try {
+    // Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  // country data
-  const res = await fetch(
-    `https://restcountries.com/v2/name/${dataGeo.country}`
-  );
-  // console.log(res);
-  const data = await res.json(); // cus we still have to call json on the respond
-  console.log(data);
-  renderCountry(data[0]);
+    //Reverse geocoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+
+    // country data
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error('Problem getting coountry');
+    // console.log(res);
+    const data = await res.json(); // cus we still have to call json on the respond
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.log(err.message);
+    renderError(`😢 ${err.message}`);
+  }
 };
 
+whereAmI();
 whereAmI();
