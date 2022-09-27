@@ -385,10 +385,20 @@ let currenImg;
 
 createImage('img/img-1.jpg')
   .then(img => {
-    currenImg = img
+    currenImg = img;
     console.log(`Image one loaded `);
-    return wait(2)
-  }).then(() => {
-    currenImg.style.display = 'none'
+    return wait(3);
+  })
+  .then(() => {
+    currenImg.style.display = 'none';
+    return createImage('img/img-2.jpg')
+  })
+  .then(img => {
+    currenImg = img;
+    console.log('Image two loaded');
+    return wait(3);
+  })
+  .then(() => {
+    currenImg.style.display = 'none';
   })
   .catch(err => console.error(`Image not found `));
