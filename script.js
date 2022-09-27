@@ -303,6 +303,7 @@ wait(2)
   })
   .then(() => console.log('Waited 1 second')); // Can easily use this asynchronous behaviour instesd of having multiple setTimeOut callback */
 
+/*  
 // Promisifying Geolocation
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -354,3 +355,40 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
+*/
+
+const imgsCont = document.querySelector('.images');
+
+const wait = function (seconds) {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const image = document.createElement('img');
+    image.src = imgPath;
+
+    image.addEventListener('load', function () {
+      imgsCont.append(image);
+      resolve(image);
+    });
+
+    image.addEventListener('error', function () {
+      reject(new Error('Image not load'));
+    });
+  });
+};
+
+let currenImg;
+
+createImage('img/img-1.jpg')
+  .then(img => {
+    currenImg = img
+    console.log(`Image one loaded `);
+    return wait(2)
+  }).then(() => {
+    currenImg.style.display = 'none'
+  })
+  .catch(err => console.error(`Image not found `));
