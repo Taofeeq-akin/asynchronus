@@ -84,3 +84,5 @@ We have Microtasks queue just like callback queue but have higher priority over 
 
 ///////////////////////////////////////////
 //Promisifying is the peocess of turning asynchronous based code into promise based
+
+// Just finished how to basically return data from an asyunc function and how to properly recieve and  handle the returned data 

@@ -455,9 +455,21 @@ console.log('1: Wil get loction');
 // console.log(city);
 
 // so to get the return in whereAmI function
-whereAmI()
-  .then(city => {
+// whereAmI()
+//   .then(city => {
+//     console.log(city);
+//   })
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(console.log('3: finished getting loction')); // Then will work for fulfilled so we can get the return
+
+// If still using then, catch and finally here, thta means we still going back to the old way
+// We can use IIFE function to be able to use async await
+(async function () {
+  try {
+    const city = await whereAmI();
     console.log(city);
-  })
-  .catch(err => console.error(`2: ${err.message}`))
-  .finally(console.log('3: finished getting loction')); // Then will work for fulfilled so we can get the return
+  } catch (err) {
+    console.error(err.message);
+  }
+  console.log('3: finished getting loction');
+})();
