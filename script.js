@@ -476,6 +476,7 @@ console.log('1: Wil get loction');
 })();
 */
 
+/*
 // Runing Promises in Parellel
 const get3Countries = async function (c1, c2, c3) {
   try {
@@ -500,3 +501,15 @@ const get3Countries = async function (c1, c2, c3) {
 };
 
 get3Countries('nigeria', 'portugal', 'canada');
+*/
+
+// Promise.race: this will return the first data to be settle either fulfilled or rejected
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+    getJSON(`https://restcountries.com/v2/name/spain`),
+    getJSON(`https://restcountries.com/v2/name/libya`),
+  ]);
+
+  console.log(res[0]);
+})();
