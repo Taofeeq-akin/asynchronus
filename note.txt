@@ -91,3 +91,10 @@ We have Microtasks queue just like callback queue but have higher priority over 
 using promise.all
 // With this it will make the promises run at once without waiting for each other 
 // Process also call Promise.all combinator cus it allow us to combine multiple promises
+
+////////////////////////
+Promise combinators do recieves an array of promises and also a promise
+num 1) is Promise.all
+// They are 3 other promise combinators which are Race, allSettled(ES2020) and any (ES2021)
+
+Most important of all promise combinator is Promise.all and promise.race so these should always be on our mind
