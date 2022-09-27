@@ -406,6 +406,7 @@ createImage('img/img-1.jpg')
 */
 
 // AyncAwait is new mothod of consuming promises which start from ES 2017
+// Also return a promise
 
 // Still using th whereAmI function
 const getPosition = function () {
@@ -436,13 +437,27 @@ const whereAmI = async function () {
     if (!res.ok) throw new Error('Problem getting coountry');
     // console.log(res);
     const data = await res.json(); // cus we still have to call json on the respond
-    console.log(data);
+    // console.log(data);
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     renderError(`😢 ${err.message}`);
+
+    // Reject promise returned from async function
+    throw err;
   }
 };
 
-whereAmI();
-whereAmI();
+console.log('1: Wil get loction');
+// const city = whereAmI(); // This will return a promise cus evry async/await function will always return a promise
+// console.log(city);
+
+// so to get the return in whereAmI function
+whereAmI()
+  .then(city => {
+    console.log(city);
+  })
+  .catch(err => console.error(`2: ${err.message}`))
+  .finally(console.log('3: finished getting loction')); // Then will work for fulfilled so we can get the return
