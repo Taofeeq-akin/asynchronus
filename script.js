@@ -31,6 +31,14 @@ const renderError = function (msg) {
   countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(function (response) {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+};
+
 ///////////////////////////////////////
 // TO get multiple countries
 
@@ -120,14 +128,6 @@ getCountryAndNeighbour('united kingdom');
 // const request = fetch(`https://restcountries.com/v2/name/nigeria`)
 // console.log(request)
 //so request is now promise after it datas have been fetch
-
-const getJSON = function (url, errorMsg = 'Something went wrong') {
-  return fetch(url).then(function (response) {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
-
-    return response.json();
-  });
-};
 
 /*
 // Consuming Promises
@@ -408,6 +408,7 @@ createImage('img/img-1.jpg')
 // AyncAwait is new mothod of consuming promises which start from ES 2017
 // Also return a promise
 
+/*
 // Still using th whereAmI function
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -473,3 +474,19 @@ console.log('1: Wil get loction');
   }
   console.log('3: finished getting loction');
 })();
+*/
+
+// Runing Promises in Parellel
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+
+    console.log([data1.capital, data2.capital, data3.capital]);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+get3Countries('nigeria', 'portugal', 'canada');
