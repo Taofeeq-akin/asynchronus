@@ -513,3 +513,28 @@ get3Countries('nigeria', 'portugal', 'canada');
 
   console.log(res[0]);
 })();
+
+// Promise.allSettled: With retun all either fulfilled or rejected unlike promise.all that returns error if rejected
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('error'),
+  Promise.resolve('new Success'),
+]).then(res => console.log(res));
+
+// but this will retuen the printout the error
+Promise.all([
+  Promise.resolve('Success'),
+  Promise.reject('error'),
+  Promise.resolve('new Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Promise.any: This will print out or return only the first fulfilled data and ignore the rejected once
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('error'),
+  Promise.resolve('new Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
