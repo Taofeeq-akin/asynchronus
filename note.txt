@@ -86,3 +86,8 @@ We have Microtasks queue just like callback queue but have higher priority over 
 //Promisifying is the peocess of turning asynchronous based code into promise based
 
 // Just finished how to basically return data from an asyunc function and how to properly recieve and  handle the returned data 
+
+///////////////////////////////////////////
+using promise.all
+// With this it will make the promises run at once without waiting for each other 
+// Process also call Promise.all combinator cus it allow us to combine multiple promises
