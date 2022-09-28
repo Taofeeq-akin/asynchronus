@@ -503,6 +503,7 @@ const get3Countries = async function (c1, c2, c3) {
 get3Countries('nigeria', 'portugal', 'canada');
 */
 
+/*
 // Promise.race: this will return the first data to be settle either fulfilled or rejected
 (async function () {
   const res = await Promise.race([
@@ -538,3 +539,76 @@ Promise.any([
 ])
   .then(res => console.log(res))
   .catch(err => console.error(err));
+
+*/
+
+// coding challenge 3
+// Part 1
+const imgsCont = document.querySelector('.images');
+
+const wait = function (seconds) {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const image = document.createElement('img');
+    image.src = imgPath;
+
+    image.addEventListener('load', function () {
+      imgsCont.append(image);
+      resolve(image);
+    });
+
+    image.addEventListener('error', function () {
+      reject(new Error('Image not load'));
+    });
+  });
+};
+
+let currentImg;
+
+const imgDisplay = async function (imgJpg, num) {
+  let img = await createImage(imgJpg);
+};
+
+const loadPause = async function () {
+  try {
+    let img = await createImage('img/img-1.jpg');
+    console.log(`Image one loaded `);
+    await wait(3);
+    img.style.display = 'none';
+
+    img = await createImage('img/img-3.jpg');
+    console.log(`Image 2 loaded `);
+    await wait(3);
+    img.style.display = 'none';
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+loadPause();
+
+// consume createImage Promise
+// createImage('img/img-1.jpg')
+//   .then(img => {
+//     currenImg = img;
+//     console.log(`Image one loaded `);
+//     return wait(3);
+//   })
+//   .then(() => {
+//     currenImg.style.display = 'none';
+//     return createImage('img/img-2.jpg')
+//   })
+//   .then(img => {
+//     currenImg = img;
+//     console.log('Image two loaded');
+//     return wait(3);
+//   })
+//   .then(() => {
+//     currenImg.style.display = 'none';
+//   })
+//   .catch(err => console.error(`Image not found `));
