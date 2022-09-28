@@ -570,10 +570,6 @@ const createImage = function (imgPath) {
 
 let currentImg;
 
-const imgDisplay = async function (imgJpg, num) {
-  let img = await createImage(imgJpg);
-};
-
 const loadPause = async function () {
   try {
     let img = await createImage('img/img-1.jpg');
@@ -590,25 +586,23 @@ const loadPause = async function () {
   }
 };
 
-loadPause();
+// loadPause();
 
-// consume createImage Promise
-// createImage('img/img-1.jpg')
-//   .then(img => {
-//     currenImg = img;
-//     console.log(`Image one loaded `);
-//     return wait(3);
-//   })
-//   .then(() => {
-//     currenImg.style.display = 'none';
-//     return createImage('img/img-2.jpg')
-//   })
-//   .then(img => {
-//     currenImg = img;
-//     console.log('Image two loaded');
-//     return wait(3);
-//   })
-//   .then(() => {
-//     currenImg.style.display = 'none';
-//   })
-//   .catch(err => console.error(`Image not found `));
+// Part 2
+const loadAll = async function (imgArr) {
+  try {
+    const imgs = imgArr.map(img => createImage(img)); // used async await cus it will return a promise and nothing will happen
+    console.log(imgs);
+
+    const imgsEl = await Promise.all(imgs); // to get the images out of the returned promise
+    console.log(imgsEl);
+    // To display the images
+    imgsEl.forEach(img => {
+      img.classList.add('parallel');
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
